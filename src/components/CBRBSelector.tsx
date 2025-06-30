@@ -1,4 +1,8 @@
-import { FunctionComponent, type CSSProperties } from "react";
+import {
+  FunctionComponent,
+  type CSSProperties,
+  type InputHTMLAttributes,
+} from "react";
 import styled from "styled-components";
 
 export type CBRBSelectorType = {
@@ -9,6 +13,9 @@ export type CBRBSelectorType = {
   /** Style props */
   rBAlignItems?: CSSProperties["alignItems"];
   titleMinWidth?: CSSProperties["minWidth"];
+
+  /** Props forwarded to the underlying input element */
+  inputProps?: InputHTMLAttributes<HTMLInputElement>;
 };
 
 const Shape1 = styled.input`
@@ -81,11 +88,12 @@ const CBRBSelector: FunctionComponent<CBRBSelectorType> = ({
   titleMinWidth,
   title,
   title1,
+  inputProps,
 }) => {
   return (
     <CbRbSelectorRoot className={className}>
       <Rb rBAlignItems={rBAlignItems}>
-        <Shape1 type="radio" />
+        <Shape1 type="radio" {...inputProps} />
         <Title111 titleMinWidth={titleMinWidth}>
           <Title1>{title}</Title1>
           <Title11>{title1}</Title11>

@@ -1,8 +1,25 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import CBRBSelector from "./CBRBSelector";
 import CBRBSelector1 from "./CBRBSelector1";
 
+/* ——— Types ——— */
+export type RuleOption = "always" | "threshold";
+
+export interface TaxFormCollectionRuleState {
+  rule: RuleOption;
+  includeOneTime: boolean;
+  blockPayouts: boolean;
+  autoEmail: boolean;
+  portalBanner: boolean;
+  auditLog: boolean;
+}
+
+export interface TaxFormCollectionRuleProps {
+  onChange?: (state: TaxFormCollectionRuleState) => void;
+}
+
+/* ——— Styled components ——— */
 const Section = styled.section`
   align-self: stretch;
   border-radius: var(--br-12);
@@ -45,28 +62,128 @@ const Content = styled.div`
   gap: var(--gap-8);
 `;
 
-const TaxFormCollectionRule: FunctionComponent = () => {
+const SubOptions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-8);
+  margin-left: 24px;
+`;
+
+/* ——— Component ——— */
+const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
+  onChange,
+}) => {
+  const [state, setState] = useState<TaxFormCollectionRuleState>({
+    rule: "always",
+    includeOneTime: true,
+    blockPayouts: true,
+    autoEmail: true,
+    portalBanner: true,
+    auditLog: true,
+  });
+
+  const update = (newState: TaxFormCollectionRuleState) => {
+    setState(newState);
+    onChange?.(newState);
+  };
+
+  const handleRuleChange = (value: RuleOption) => {
+    update({ ...state, rule: value });
+  };
+
+  const handleBooleanChange =
+    (key: keyof Omit<TaxFormCollectionRuleState, "rule">) =>
+    (e: ChangeEvent<HTMLInputElement>) => {
+      update({ ...state, [key]: e.target.checked });
+    };
+
+  const renderRadioOption = (
+    value: RuleOption,
+    label: string,
+    testId: string,
+  ) => {
+    const Selected = state.rule === value ? CBRBSelector1 : CBRBSelector;
+    return (
+      <Selected
+        title={label}
+        inputProps={{
+          name: "tax-rule",
+          value,
+          checked: state.rule === value,
+          onChange: () => handleRuleChange(value),
+          "data-testid": testId,
+        }}
+      />
+    );
+  };
+
   return (
-    <Section>
+    <Section data-testid="tax-form-rule">
       <Header>
         <Title>Tax Form Collection Rules</Title>
       </Header>
       <Content>
-        <CBRBSelector1
-          title="Always collect"
-          title1="Require from all vendors upon onboarding."
-        />
-        <CBRBSelector
-          title="Trigger after $600"
-          title1="Require once total payments to a vendor ≥ $600."
-        />
-        <CBRBSelector
-          title="Include one-time payments over $600"
-        />
-        <CBRBSelector title="Block payouts until form is completed" />
-        <CBRBSelector title="Auto-email notification to vendor" />
-        <CBRBSelector title="Vendor portal warning/banner" />
-        <CBRBSelector title="Audit log per vendor" />
+        {renderRadioOption(
+          "always",
+          "Always collect – Require from all vendors upon onboarding.",
+          "rule-always",
+        )}
+        {renderRadioOption(
+          "threshold",
+          "Trigger after $600 – Require once total payments to a vendor ≥ $600.",
+          "rule-threshold",
+        )}
+
+        {state.rule === "threshold" && (
+          <SubOptions>
+            <label>
+              <input
+                type="checkbox"
+                checked={state.includeOneTime}
+                onChange={handleBooleanChange("includeOneTime")}
+                data-testid="rule-include-one-time"
+              />
+              Include one-time payments over $600
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={state.blockPayouts}
+                onChange={handleBooleanChange("blockPayouts")}
+                data-testid="rule-block-payouts"
+              />
+              Block payouts until form is completed
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={state.autoEmail}
+                onChange={handleBooleanChange("autoEmail")}
+                data-testid="rule-auto-email"
+              />
+              Auto-email notification to vendor
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={state.portalBanner}
+                onChange={handleBooleanChange("portalBanner")}
+                data-testid="rule-portal-banner"
+              />
+              Vendor portal warning/banner
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={state.auditLog}
+                onChange={handleBooleanChange("auditLog")}
+                data-testid="rule-audit-log"
+              />
+              Audit log per vendor
+            </label>
+          </SubOptions>
+        )}
       </Content>
     </Section>
   );

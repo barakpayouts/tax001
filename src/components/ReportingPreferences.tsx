@@ -1,8 +1,20 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import CBRBSelector from "./CBRBSelector";
 import CBRBSelector1 from "./CBRBSelector1";
 
+/* ——— Types ——— */
+export type ReportingPreferenceOption = "auto" | "manual" | "none";
+
+export interface ReportingPreferenceState {
+  preference: ReportingPreferenceOption;
+}
+
+export interface ReportingPreferencesProps {
+  onChange?: (state: ReportingPreferenceState) => void;
+}
+
+/* ——— Styled components ——— */
 const Section = styled.section`
   align-self: stretch;
   border-radius: var(--br-12);
@@ -45,25 +57,66 @@ const Content = styled.div`
   gap: var(--gap-8);
 `;
 
-const ReportingPreferences: FunctionComponent = () => {
+/* ——— Component ——— */
+const ReportingPreferences: FunctionComponent<ReportingPreferencesProps> = ({
+  onChange,
+}) => {
+  const [state, setState] = useState<ReportingPreferenceState>({
+    preference: "auto",
+  });
+
+  const change = (value: ReportingPreferenceOption) => {
+    const newState = { preference: value };
+    setState(newState);
+    onChange?.(newState);
+  };
+
+  const renderOption = (
+    value: ReportingPreferenceOption,
+    title: string,
+    subtitle: string,
+    testId: string,
+  ) => {
+    const Selected = state.preference === value ? CBRBSelector1 : CBRBSelector;
+    return (
+      <Selected
+        title={title}
+        title1={subtitle}
+        inputProps={{
+          name: "reporting",
+          value,
+          checked: state.preference === value,
+          onChange: () => change(value),
+          "data-testid": testId,
+        }}
+      />
+    );
+  };
+
   return (
-    <Section>
+    <Section data-testid="reporting-preferences">
       <Header>
         <Title>1099 Reporting Preferences</Title>
       </Header>
       <Content>
-        <CBRBSelector1
-          title="Auto-file 1099s for all eligible vendors"
-          title1="Fully automated: system tracks, generates, files, and delivers"
-        />
-        <CBRBSelector
-          title="Manual selection"
-          title1="Client reviews & selects which vendors to include at year-end"
-        />
-        <CBRBSelector
-          title="No filing (client handles it externally)"
-          title1="System provides payout summaries but does not file"
-        />
+        {renderOption(
+          "auto",
+          "Auto-file 1099s for all eligible vendors",
+          "Fully automated: system tracks, generates, files, and delivers",
+          "reporting-auto",
+        )}
+        {renderOption(
+          "manual",
+          "Manual selection",
+          "Client reviews & selects which vendors to include at year-end",
+          "reporting-manual",
+        )}
+        {renderOption(
+          "none",
+          "No filing (client handles it externally)",
+          "System provides payout summaries but does not file",
+          "reporting-none",
+        )}
       </Content>
     </Section>
   );
