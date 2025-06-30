@@ -1,5 +1,7 @@
 import { FunctionComponent, useState, ChangeEvent } from "react";
 import styled from "styled-components";
+import CBRBSelector from "./CBRBSelector";
+import CBRBSelector1 from "./CBRBSelector1";
 
 export type RuleOption = "always" | "threshold";
 
@@ -58,11 +60,6 @@ const Content = styled.div`
   gap: var(--gap-8);
 `;
 
-const Row = styled.label`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-8);
-`;
 
 const SubOptions = styled.div`
   display: flex;
@@ -100,36 +97,38 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
       update({ ...state, [key]: e.target.checked });
     };
 
+  const renderRadioOption = (value: RuleOption, label: string, testId: string) => {
+    const Selected = state.rule === value ? CBRBSelector1 : CBRBSelector;
+    return (
+      <Selected
+        title={label}
+        inputProps={{
+          name: "tax-rule",
+          value,
+          checked: state.rule === value,
+          onChange: () => handleRuleChange(value),
+          "data-testid": testId,
+        }}
+      />
+    );
+  };
+
   return (
     <Section data-testid="tax-form-rule">
       <Header>
         <Title>Tax Form Collection Rules</Title>
       </Header>
       <Content>
-        <Row>
-          <input
-            type="radio"
-            name="tax-rule"
-            value="always"
-            checked={state.rule === "always"}
-            onChange={() => handleRuleChange("always")}
-            data-testid="rule-always"
-          />
-          <span>Always collect – Require from all vendors upon onboarding.</span>
-        </Row>
-        <Row>
-          <input
-            type="radio"
-            name="tax-rule"
-            value="threshold"
-            checked={state.rule === "threshold"}
-            onChange={() => handleRuleChange("threshold")}
-            data-testid="rule-threshold"
-          />
-          <span>
-            Trigger after $600 – Require once total payments to a vendor ≥ $600.
-          </span>
-        </Row>
+        {renderRadioOption(
+          "always",
+          "Always collect – Require from all vendors upon onboarding.",
+          "rule-always",
+        )}
+        {renderRadioOption(
+          "threshold",
+          "Trigger after $600 – Require once total payments to a vendor ≥ $600.",
+          "rule-threshold",
+        )}
         {state.rule === "threshold" && (
           <SubOptions>
             <label>

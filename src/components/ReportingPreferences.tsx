@@ -1,5 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import styled from "styled-components";
+import CBRBSelector from "./CBRBSelector";
+import CBRBSelector1 from "./CBRBSelector1";
 
 export type ReportingPreferenceOption = "auto" | "manual" | "none";
 
@@ -53,11 +55,6 @@ const Content = styled.div`
   gap: var(--gap-8);
 `;
 
-const Row = styled.label`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-8);
-`;
 
 const ReportingPreferences: FunctionComponent<ReportingPreferencesProps> = ({
   onChange,
@@ -72,52 +69,52 @@ const ReportingPreferences: FunctionComponent<ReportingPreferencesProps> = ({
     onChange?.(newState);
   };
 
+  const renderOption = (
+    value: ReportingPreferenceOption,
+    title: string,
+    subtitle: string,
+    testId: string,
+  ) => {
+    const Selected = state.preference === value ? CBRBSelector1 : CBRBSelector;
+    return (
+      <Selected
+        title={title}
+        title1={subtitle}
+        inputProps={{
+          name: "reporting",
+          value,
+          checked: state.preference === value,
+          onChange: () => change(value),
+          "data-testid": testId,
+        }}
+      />
+    );
+  };
+
   return (
     <Section data-testid="reporting-preferences">
       <Header>
         <Title>1099 Reporting Preferences</Title>
       </Header>
       <Content>
-        <Row>
-          <input
-            type="radio"
-            name="reporting"
-            value="auto"
-            checked={state.preference === "auto"}
-            onChange={() => change("auto")}
-            data-testid="reporting-auto"
-          />
-          <span>
-            Auto-file 1099s for all eligible vendors – fully automated tracking,
-            filing and delivery.
-          </span>
-        </Row>
-        <Row>
-          <input
-            type="radio"
-            name="reporting"
-            value="manual"
-            checked={state.preference === "manual"}
-            onChange={() => change("manual")}
-            data-testid="reporting-manual"
-          />
-          <span>
-            Manual selection – review and choose vendors to include at year-end
-          </span>
-        </Row>
-        <Row>
-          <input
-            type="radio"
-            name="reporting"
-            value="none"
-            checked={state.preference === "none"}
-            onChange={() => change("none")}
-            data-testid="reporting-none"
-          />
-          <span>
-            No filing – you handle 1099s externally; payout summaries only
-          </span>
-        </Row>
+        {renderOption(
+          "auto",
+          "Auto-file 1099s for all eligible vendors",
+          "Fully automated: system tracks, generates, files, and delivers",
+          "reporting-auto",
+        )}
+        {renderOption(
+          "manual",
+          "Manual selection",
+          "Client reviews & selects which vendors to include at year-end",
+          "reporting-manual",
+        )}
+        {renderOption(
+          "none",
+          "No filing (client handles it externally)",
+          "System provides payout summaries but does not file",
+          "reporting-none",
+        )}
       </Content>
     </Section>
   );
