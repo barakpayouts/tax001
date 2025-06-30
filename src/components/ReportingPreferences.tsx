@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CBRBSelector from "./CBRBSelector";
 import CBRBSelector1 from "./CBRBSelector1";
 
+/* ——— Types ——— */
 export type ReportingPreferenceOption = "auto" | "manual" | "none";
 
 export interface ReportingPreferenceState {
@@ -13,6 +14,7 @@ export interface ReportingPreferencesProps {
   onChange?: (state: ReportingPreferenceState) => void;
 }
 
+/* ——— Styled components ——— */
 const Section = styled.section`
   align-self: stretch;
   border-radius: var(--br-12);
@@ -55,6 +57,7 @@ const Content = styled.div`
   gap: var(--gap-8);
 `;
 
+/* ——— Component ——— */
 const ReportingPreferences: FunctionComponent<ReportingPreferencesProps> = ({
   onChange,
 }) => {

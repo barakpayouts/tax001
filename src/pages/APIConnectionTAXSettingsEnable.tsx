@@ -10,6 +10,7 @@ import TaxFormCollectionRule from "../components/TaxFormCollectionRule";
 import ReportingPreferences from "../components/ReportingPreferences";
 import { useNavigate } from "react-router-dom";
 
+/* ——— Styled wrappers ——— */
 const SidebarWizard1 = styled.div`
   align-self: stretch;
   width: 334px;
@@ -471,6 +472,7 @@ const ApiConnectionTaxSettingsRoot = styled.div`
   letter-spacing: normal;
 `;
 
+/* ——— Component ——— */
 const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
   const navigate = useNavigate();
 
@@ -481,10 +483,14 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
   return (
     <ApiConnectionTaxSettingsRoot>
       <Header />
+
       <Wrapping1>
+        {/* Wizard sidebar */}
         <SidebarWizard1>
           <Wizard />
         </SidebarWizard1>
+
+        {/* Main content */}
         <Wrapped1>
           <Title1>
             <Title>TAX Settings</Title>
@@ -494,7 +500,9 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
               </TooltipBtn>
             </TooltipButtonRestore1>
           </Title1>
+
           <Scroll>
+            {/* ——— TAX form selection ——— */}
             <VendorTaxFormSectionComp>
               <Title11>
                 <HintMessage>
@@ -513,6 +521,8 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                 />
               </Content1>
             </VendorTaxFormSectionComp>
+
+            {/* ——— W-9 / W-8 review actions ——— */}
             <W9W8FormsSectionComp>
               <Title111>
                 <HintMessage>
@@ -520,6 +530,7 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                 </HintMessage>
                 <ButtonIcon loading="lazy" alt="" src="/button2.svg" />
               </Title111>
+
               <ManuallyReview
                 monthly="Manually Review and Approve"
                 totalBalanceFromA="Who can approve a W9 form submission?"
@@ -530,14 +541,17 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                 titleMinWidth="660px"
                 title="Automatically Approve"
               />
+
               <Spread>
                 <Separator />
               </Spread>
+
               <Title1111>
                 <HintMessage>
                   Action to take when a new W8 form is submitted
                 </HintMessage>
               </Title1111>
+
               <AutomaticallyApprove
                 headlineJustifyContent="flex-start"
                 monthly="Manually review and Approve"
@@ -552,6 +566,8 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                 title="Automatically Approve"
               />
             </W9W8FormsSectionComp>
+
+            {/* ——— Payments without tax form ——— */}
             <TaxFormSectionComp>
               <Title11>
                 <HintMessage>
@@ -560,6 +576,7 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                 </HintMessage>
                 <ButtonIcon loading="lazy" alt="" src="/button2.svg" />
               </Title11>
+
               <Content1111>
                 <ApprovedTaxFormRequired>
                   <Rbtext>
@@ -573,15 +590,18 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                     </VendorIsNot>
                   </Content11>
                 </ApprovedTaxFormRequired>
+
                 <TaxFormNotRequired>
                   <Rbtext1>
                     <RadioButton1 type="radio" />
                     <Monthly>Tax Form Not Required</Monthly>
                   </Rbtext1>
+
                   <Content111>
                     <AllowPaymentsTo>
                       Allow payments to recipients with no tax form on file
                     </AllowPaymentsTo>
+
                     <Cb>
                       <CBRBSelector1
                         rBAlignItems="flex-start"
@@ -599,12 +619,16 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                   </Content111>
                 </TaxFormNotRequired>
               </Content1111>
-              </TaxFormSectionComp>
+            </TaxFormSectionComp>
+
+            {/* ——— Dynamic rule components (from feature branch) ——— */}
             <TaxFormCollectionRule />
             <ReportingPreferences />
 
             <Separator1 />
           </Scroll>
+
+          {/* Action buttons */}
           <ActionBtn>
             <ButtonIcon1 loading="lazy" alt="" src="/button-4.svg" />
             <R>
@@ -612,7 +636,7 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                 <UploadDataSource>Back</UploadDataSource>
               </Back1>
               <Next1>
-                <UploadDataSource1>{`Save & Continue`}</UploadDataSource1>
+                <UploadDataSource1>Save &amp; Continue</UploadDataSource1>
               </Next1>
             </R>
           </ActionBtn>

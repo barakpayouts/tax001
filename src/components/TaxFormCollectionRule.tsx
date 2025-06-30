@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CBRBSelector from "./CBRBSelector";
 import CBRBSelector1 from "./CBRBSelector1";
 
+/* ——— Types ——— */
 export type RuleOption = "always" | "threshold";
 
 export interface TaxFormCollectionRuleState {
@@ -18,6 +19,7 @@ export interface TaxFormCollectionRuleProps {
   onChange?: (state: TaxFormCollectionRuleState) => void;
 }
 
+/* ——— Styled components ——— */
 const Section = styled.section`
   align-self: stretch;
   border-radius: var(--br-12);
@@ -68,6 +70,7 @@ const SubOptions = styled.div`
   margin-left: 24px;
 `;
 
+/* ——— Component ——— */
 const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
   onChange,
 }) => {
@@ -89,14 +92,17 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
     update({ ...state, rule: value });
   };
 
-  const handleBooleanChange = (
-    key: keyof Omit<TaxFormCollectionRuleState, "rule">
-  ) =>
+  const handleBooleanChange =
+    (key: keyof Omit<TaxFormCollectionRuleState, "rule">) =>
     (e: ChangeEvent<HTMLInputElement>) => {
       update({ ...state, [key]: e.target.checked });
     };
 
-  const renderRadioOption = (value: RuleOption, label: string, testId: string) => {
+  const renderRadioOption = (
+    value: RuleOption,
+    label: string,
+    testId: string,
+  ) => {
     const Selected = state.rule === value ? CBRBSelector1 : CBRBSelector;
     return (
       <Selected
@@ -128,6 +134,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
           "Trigger after $600 – Require once total payments to a vendor ≥ $600.",
           "rule-threshold",
         )}
+
         {state.rule === "threshold" && (
           <SubOptions>
             <label>
