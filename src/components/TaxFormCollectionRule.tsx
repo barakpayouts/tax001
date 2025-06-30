@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, ChangeEvent } from "react";
 import styled from "styled-components";
 
 export type RuleOption = "always" | "threshold";
@@ -96,7 +96,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
   const handleBooleanChange = (
     key: keyof Omit<TaxFormCollectionRuleState, "rule">
   ) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       update({ ...state, [key]: e.target.checked });
     };
 
