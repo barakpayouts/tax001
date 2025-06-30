@@ -6,6 +6,8 @@ import CBRBSelector from "../components/CBRBSelector";
 import CBRBSelector1 from "../components/CBRBSelector1";
 import ManuallyReview from "../components/ManuallyReview";
 import AutomaticallyApprove from "../components/AutomaticallyApprove";
+import TaxFormCollectionRule from "../components/TaxFormCollectionRule";
+import ReportingPreferences from "../components/ReportingPreferences";
 import { useNavigate } from "react-router-dom";
 
 const SidebarWizard1 = styled.div`
@@ -456,7 +458,7 @@ const Wrapping1 = styled.main`
 `;
 const ApiConnectionTaxSettingsRoot = styled.div`
   width: 100%;
-  height: 1919px;
+  height: 2300px;
   position: relative;
   background-color: var(--Tooltip-190-Tooltip-fill);
   display: flex;
@@ -597,7 +599,9 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                   </Content111>
                 </TaxFormNotRequired>
               </Content1111>
-            </TaxFormSectionComp>
+              </TaxFormSectionComp>
+            <TaxFormCollectionRule onChange={(s) => console.log("tax rule", s)} />
+            <ReportingPreferences onChange={(s) => console.log("reporting", s)} />
             <Separator1 />
           </Scroll>
           <ActionBtn>
