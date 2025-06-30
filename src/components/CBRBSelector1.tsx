@@ -1,4 +1,8 @@
-import { FunctionComponent, type CSSProperties } from "react";
+import {
+  FunctionComponent,
+  type CSSProperties,
+  type InputHTMLAttributes,
+} from "react";
 import styled from "styled-components";
 
 export type CBRBSelector1Type = {
@@ -9,6 +13,9 @@ export type CBRBSelector1Type = {
   /** Style props */
   rBAlignItems?: CSSProperties["alignItems"];
   titleMinWidth?: CSSProperties["minWidth"];
+
+  /** Props forwarded to the underlying input element */
+  inputProps?: InputHTMLAttributes<HTMLInputElement>;
 };
 
 const Shape1 = styled.input`
@@ -62,7 +69,7 @@ const Rb = styled.div<{ rBAlignItems?: CSSProperties["alignItems"] }>`
   }
   align-items: ${(p) => p.rBAlignItems};
 `;
-const CbRbSelectorRoot = styled.div`
+const CbRbSelectorRoot = styled.label`
   align-self: stretch;
   border-radius: var(--Radius-CB-RB-bgselector);
   background-color: var(--Active-Checked-Undertemined-310-Fill);
@@ -78,6 +85,7 @@ const CbRbSelectorRoot = styled.div`
   font-size: var(--Paragraph-14-Paragraph-bold-Font-Size);
   color: var(--Active-Checked-Undertemined-310-Title);
   font-family: var(--Inter);
+  cursor: pointer;
 `;
 
 const CBRBSelector1: FunctionComponent<CBRBSelector1Type> = ({
@@ -86,11 +94,12 @@ const CBRBSelector1: FunctionComponent<CBRBSelector1Type> = ({
   titleMinWidth,
   title,
   title1,
+  inputProps,
 }) => {
   return (
     <CbRbSelectorRoot className={className}>
       <Rb rBAlignItems={rBAlignItems}>
-        <Shape1 type="radio" />
+        <Shape1 type="radio" {...inputProps} />
         <Title111 titleMinWidth={titleMinWidth}>
           <Title1>{title}</Title1>
           <Title11>{title1}</Title11>
