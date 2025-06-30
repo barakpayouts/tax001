@@ -600,12 +600,8 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
                 </TaxFormNotRequired>
               </Content1111>
               </TaxFormSectionComp>
-            <TaxFormCollectionRule
-              onChange={(state) => console.log("tax rule", state)}
-            />
-            <ReportingPreferences
-              onChange={(state) => console.log("reporting", state)}
-            />
+            <TaxFormCollectionRule />
+            <ReportingPreferences />
 
             <Separator1 />
           </Scroll>
