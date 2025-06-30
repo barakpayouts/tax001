@@ -101,7 +101,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
     };
 
   return (
-    <Section>
+    <Section data-testid="tax-form-rule">
       <Header>
         <Title>Tax Form Collection Rules</Title>
       </Header>
@@ -113,6 +113,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
             value="always"
             checked={state.rule === "always"}
             onChange={() => handleRuleChange("always")}
+            data-testid="rule-always"
           />
           <span>Always collect – Require from all vendors upon onboarding.</span>
         </Row>
@@ -123,6 +124,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
             value="threshold"
             checked={state.rule === "threshold"}
             onChange={() => handleRuleChange("threshold")}
+            data-testid="rule-threshold"
           />
           <span>
             Trigger after $600 – Require once total payments to a vendor ≥ $600.
@@ -135,6 +137,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
                 type="checkbox"
                 checked={state.includeOneTime}
                 onChange={handleBooleanChange("includeOneTime")}
+                data-testid="rule-include-one-time"
               />
               Include one-time payments over $600
             </label>
@@ -143,6 +146,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
                 type="checkbox"
                 checked={state.blockPayouts}
                 onChange={handleBooleanChange("blockPayouts")}
+                data-testid="rule-block-payouts"
               />
               Block payouts until form is completed
             </label>
@@ -151,6 +155,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
                 type="checkbox"
                 checked={state.autoEmail}
                 onChange={handleBooleanChange("autoEmail")}
+                data-testid="rule-auto-email"
               />
               Auto-email notification to vendor
             </label>
@@ -159,6 +164,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
                 type="checkbox"
                 checked={state.portalBanner}
                 onChange={handleBooleanChange("portalBanner")}
+                data-testid="rule-portal-banner"
               />
               Vendor portal warning/banner
             </label>
@@ -167,6 +173,7 @@ const TaxFormCollectionRule: FunctionComponent<TaxFormCollectionRuleProps> = ({
                 type="checkbox"
                 checked={state.auditLog}
                 onChange={handleBooleanChange("auditLog")}
+                data-testid="rule-audit-log"
               />
               Audit log per vendor
             </label>
