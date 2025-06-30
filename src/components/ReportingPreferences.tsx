@@ -55,7 +55,6 @@ const Content = styled.div`
   gap: var(--gap-8);
 `;
 
-
 const ReportingPreferences: FunctionComponent<ReportingPreferencesProps> = ({
   onChange,
 }) => {

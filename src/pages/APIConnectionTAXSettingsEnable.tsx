@@ -606,6 +606,7 @@ const APIConnectionTAXSettingsEnable: FunctionComponent = () => {
             <ReportingPreferences
               onChange={(state) => console.log("reporting", state)}
             />
+
             <Separator1 />
           </Scroll>
           <ActionBtn>

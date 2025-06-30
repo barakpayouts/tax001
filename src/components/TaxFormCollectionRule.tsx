@@ -60,7 +60,6 @@ const Content = styled.div`
   gap: var(--gap-8);
 `;
 
-
 const SubOptions = styled.div`
   display: flex;
   flex-direction: column;
