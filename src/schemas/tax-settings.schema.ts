@@ -12,7 +12,7 @@ export const taxSettingsSchema = z.object({
   }),
   requireTaxForm: z.boolean(),
   applyRestriction: z.boolean().optional(),
-  reportingFrequency: z.enum(['monthly', 'quarterly', 'annually']).default('monthly'),
+  reportingFrequency: z.enum(['monthly', 'quarterly', 'annually']).optional().default('monthly'),
   enableBackupWithholding: z.boolean().default(false),
   enableNonResidentWithholding: z.boolean().default(false),
 }).refine((data) => {
